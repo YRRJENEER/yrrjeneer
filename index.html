@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Civil Engineer — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f0e8;
+      --steel: #2a3540;
+      --amber: #d4820a;
+      --amber-light: #f0a030;
+      --concrete: #8a8f94;
+      --rust: #b04a1e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 12px; height: 12px;
+      background: var(--amber);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.2s, height 0.2s;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 40px; height: 40px;
+      border: 1px solid var(--amber);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease-out, width 0.2s, height 0.2s, opacity 0.2s;
+      opacity: 0.5;
+    }
+    body:hover .cursor { opacity: 1; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 3rem;
+      mix-blend-mode: normal;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.15em;
+      color: var(--amber);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--concrete);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--amber); }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      padding: 5rem 3rem;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(10,10,10,0.85) 40%, rgba(212,130,10,0.15) 100%),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 79px,
+          rgba(255,255,255,0.03) 79px,
+          rgba(255,255,255,0.03) 80px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 79px,
+          rgba(255,255,255,0.03) 79px,
+          rgba(255,255,255,0.03) 80px
+        );
+      background-color: #0d1417;
+    }
+
+    /* Bridge SVG graphic */
+    .hero-bridge {
+      position: absolute;
+      bottom: 0; right: -2%;
+      width: 62%;
+      opacity: 0.18;
+      animation: fadeUp 1.4s ease forwards;
+    }
+
+    .hero-line {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 46%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--amber) 30%, var(--amber) 70%, transparent);
+      opacity: 0.3;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    .hero-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 12vw, 10rem);
+      line-height: 0.88;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    .hero-name span {
+      display: block;
+      color: var(--amber);
+      -webkit-text-stroke: 2px var(--amber);
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      margin-top: 1.8rem;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--concrete);
+      max-width: 420px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-top: 2.5rem;
+      padding: 0.9rem 2rem;
+      background: var(--amber);
+      color: var(--black);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: background 0.3s, gap 0.3s;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+    .hero-cta:hover {
+      background: var(--amber-light);
+      gap: 1.4rem;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 3rem;
+      writing-mode: vertical-rl;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--concrete);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 1s 1.2s forwards;
+    }
+    .hero-scroll::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 60px;
+      background: var(--amber);
+      animation: grow 1.5s 1.5s ease forwards;
+      transform-origin: top;
+      transform: scaleY(0);
+    }
+
+    /* ─── STATS STRIP ─── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stat {
+      padding: 2.5rem 3rem;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.3s;
+    }
+    .stat:last-child { border-right: none; }
+    .stat:hover { background: rgba(212,130,10,0.06); }
+
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      color: var(--amber);
+      line-height: 1;
+    }
+
+    .stat-label {
+      margin-top: 0.4rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--concrete);
+    }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 7rem 3rem; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .section-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      color: var(--amber);
+      letter-spacing: 0.1em;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* ─── PROJECTS ─── */
+    #projects { background: #0d1115; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .project-card {
+      position: relative;
+      padding: 3rem;
+      background: #0d1115;
+      overflow: hidden;
+      transition: background 0.4s;
+      cursor: none;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 0;
+      background: var(--amber);
+      transition: height 0.5s ease;
+    }
+
+    .project-card:hover::before { height: 100%; }
+    .project-card:hover { background: #111820; }
+
+    .project-icon {
+      width: 48px; height: 48px;
+      margin-bottom: 2rem;
+      opacity: 0.7;
+    }
+
+    .project-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85rem;
+      color: var(--amber);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.8rem;
+    }
+
+    .project-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.9rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .project-desc {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--concrete);
+      max-width: 380px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .tag {
+      padding: 0.3rem 0.8rem;
+      border: 1px solid rgba(212,130,10,0.3);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+
+    /* ─── SKILLS ─── */
+    #skills { background: var(--black); }
+
+    .skills-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .skills-text p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--concrete);
+      margin-bottom: 1.2rem;
+    }
+
+    .skills-text strong { color: var(--white); font-weight: 400; }
+
+    .skill-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    .skill-item {}
+    .skill-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+    }
+    .skill-name {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .skill-pct {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      color: var(--amber);
+    }
+    .skill-track {
+      height: 2px;
+      background: rgba(255,255,255,0.08);
+      position: relative;
+    }
+    .skill-fill {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      background: linear-gradient(to right, var(--amber), var(--amber-light));
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    /* ─── EXPERIENCE ─── */
+    #experience { background: #0d1115; }
+
+    .timeline {
+      position: relative;
+      padding-left: 3rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 3.5rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -3.35rem;
+      top: 0.4rem;
+      width: 10px; height: 10px;
+      background: var(--amber);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(212,130,10,0.15);
+    }
+
+    .timeline-date {
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-role {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-company {
+      font-size: 0.85rem;
+      color: var(--concrete);
+      margin-bottom: 0.9rem;
+    }
+
+    .timeline-desc {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--concrete);
+      max-width: 560px;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--black);
+      text-align: center;
+      padding: 9rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #contact::before {
+      content: 'CONTACT';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(8rem, 20vw, 18rem);
+      color: rgba(255,255,255,0.025);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .contact-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      margin-bottom: 2rem;
+    }
+
+    .contact-sub {
+      font-size: 1rem;
+      color: var(--concrete);
+      margin-bottom: 3rem;
+      line-height: 1.7;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 1rem 2.4rem;
+      border: 1px solid var(--amber);
+      color: var(--amber);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .contact-btn:hover {
+      background: var(--amber);
+      color: var(--black);
+    }
+
+    .contact-btn.filled {
+      background: var(--amber);
+      color: var(--black);
+    }
+
+    .contact-btn.filled:hover {
+      background: var(--amber-light);
+      border-color: var(--amber-light);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes grow {
+      to { transform: scaleY(1); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 5rem 1.5rem; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .projects-grid { grid-template-columns: 1fr; }
+      .skills-layout { grid-template-columns: 1fr; gap: 3rem; }
+      #hero { padding: 5rem 1.5rem; }
+      .hero-name { font-size: clamp(4rem, 18vw, 7rem); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">CE / Portfolio</div>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-line"></div>
+
+    <!-- Structural bridge illustration -->
+    <svg class="hero-bridge" viewBox="0 0 900 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Deck -->
+      <rect x="0" y="370" width="900" height="8" fill="#d4820a"/>
+      <!-- Towers -->
+      <rect x="220" y="80" width="16" height="300" fill="#d4820a"/>
+      <rect x="660" y="80" width="16" height="300" fill="#d4820a"/>
+      <!-- Tower cross beams -->
+      <rect x="210" y="140" width="36" height="6" fill="#d4820a"/>
+      <rect x="210" y="200" width="36" height="6" fill="#d4820a"/>
+      <rect x="650" y="140" width="36" height="6" fill="#d4820a"/>
+      <rect x="650" y="200" width="36" height="6" fill="#d4820a"/>
+      <!-- Suspension cables main -->
+      <path d="M 228 85 Q 448 330 668 85" stroke="#d4820a" stroke-width="3" fill="none"/>
+      <!-- Vertical suspenders -->
+      <line x1="270" y1="152" x2="270" y2="370" stroke="#d4820a" stroke-width="1.5" opacity="0.6"/>
+      <line x1="320" y1="200" x2="320" y2="370" stroke="#d4820a" stroke-width="1.5" opacity="0.6"/>
+      <line x1="370" y1="237" x2="370" y2="370" stroke="#d4820a" stroke-width="1.5" opacity="0.6"/>
+      <line x1="420" y1="258" x2="420" y2="370" stroke="#d4820a" stroke-width="1.5" opacity="0.6"/>
+      <line x1="448" y1="264" x2="448" y2="370" stroke="#d4820a" stroke-width="1.5" opacity="0.6"/>
+      <line x1="478" y1="258" x2="478" y2="370" stroke="#d4820a" stroke-width="1.5" opacity="0.6"/>
+      <line x1="528" y1="237" x2="528" y2="370" stroke="#d4820a" stroke-width="1.5" opacity="0.6"/>
+      <line x1="578" y1="200" x2="578" y2="370" stroke="#d4820a" stroke-width="1.5" opacity="0.6"/>
+      <line x1="628" y1="152" x2="628" y2="370" stroke="#d4820a" stroke-width="1.5" opacity="0.6"/>
+      <!-- Piers -->
+      <rect x="210" y="378" width="36" height="80" fill="#d4820a" opacity="0.5"/>
+      <rect x="650" y="378" width="36" height="80" fill="#d4820a" opacity="0.5"/>
+    </svg>
+
+    <div class="hero-content">
+      <p class="hero-tag">Civil Engineering Portfolio</p>
+      <h1 class="hero-name">
+        Your
+        <span>Name</span>
+      </h1>
+      <p class="hero-sub">
+        Designing infrastructure that endures. Specializing in structural analysis, bridge engineering, and large-scale urban development projects.
+      </p>
+      <a href="#projects" class="hero-cta">
+        View Projects &#8594;
+      </a>
+    </div>
+
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat reveal">
+      <div class="stat-num">12+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat reveal" style="transition-delay:0.1s">
+      <div class="stat-num">48</div>
+      <div class="stat-label">Projects Completed</div>
+    </div>
+    <div class="stat reveal" style="transition-delay:0.2s">
+      <div class="stat-num">$2B</div>
+      <div class="stat-label">Infrastructure Value</div>
+    </div>
+    <div class="stat reveal" style="transition-delay:0.3s">
+      <div class="stat-num">7</div>
+      <div class="stat-label">Industry Awards</div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="projects-grid">
+
+      <!-- AutoCAD -->
+      <div class="project-card reveal">
+        <svg class="project-icon" viewBox="0 0 48 48" fill="none">
+          <rect x="4" y="4" width="40" height="40" stroke="#d4820a" stroke-width="1.5" stroke-dasharray="3 2"/>
+          <line x1="12" y1="36" x2="36" y2="36" stroke="#d4820a" stroke-width="2"/>
+          <line x1="12" y1="36" x2="12" y2="14" stroke="#d4820a" stroke-width="2"/>
+          <line x1="12" y1="14" x2="22" y2="24" stroke="#d4820a" stroke-width="1.5"/>
+          <line x1="22" y1="24" x2="36" y2="14" stroke="#d4820a" stroke-width="1.5"/>
+          <circle cx="12" cy="36" r="2" fill="#d4820a"/>
+          <circle cx="36" cy="36" r="2" fill="#d4820a"/>
+          <circle cx="12" cy="14" r="2" fill="#d4820a"/>
+        </svg>
+        <p class="project-num">Tool 01</p>
+        <h3 class="project-title">AutoCAD Drawings</h3>
+        <p class="project-desc">
+          Producing precise 2D construction drawings, plan layouts, section details, and as-built documentation. Drafts cover structural, civil, and site works in full compliance with engineering drawing standards.
+        </p>
+        <div class="project-tags">
+          <span class="tag">AutoCAD</span>
+          <span class="tag">2D Drafting</span>
+          <span class="tag">Construction Docs</span>
+        </div>
+      </div>
+
+      <!-- STAAD -->
+      <div class="project-card reveal" style="transition-delay:0.1s">
+        <svg class="project-icon" viewBox="0 0 48 48" fill="none">
+          <line x1="8" y1="40" x2="40" y2="40" stroke="#d4820a" stroke-width="2"/>
+          <line x1="8" y1="40" x2="8" y2="10" stroke="#d4820a" stroke-width="1.5"/>
+          <polyline points="8,40 16,22 24,30 32,14 40,20" stroke="#d4820a" stroke-width="2" fill="none"/>
+          <circle cx="16" cy="22" r="2.5" fill="#d4820a"/>
+          <circle cx="24" cy="30" r="2.5" fill="#d4820a"/>
+          <circle cx="32" cy="14" r="2.5" fill="#d4820a"/>
+          <circle cx="40" cy="20" r="2.5" fill="#d4820a"/>
+          <line x1="16" y1="22" x2="16" y2="40" stroke="#d4820a" stroke-width="1" stroke-dasharray="2 2" opacity="0.5"/>
+          <line x1="32" y1="14" x2="32" y2="40" stroke="#d4820a" stroke-width="1" stroke-dasharray="2 2" opacity="0.5"/>
+        </svg>
+        <p class="project-num">Tool 02</p>
+        <h3 class="project-title">STAAD Structural Analysis</h3>
+        <p class="project-desc">
+          Running full structural modeling and analysis using STAAD.Pro — load combinations, beam and column design, deflection checks, and reaction outputs for steel and concrete frame structures.
+        </p>
+        <div class="project-tags">
+          <span class="tag">STAAD.Pro</span>
+          <span class="tag">Structural Analysis</span>
+          <span class="tag">Load Design</span>
+        </div>
+      </div>
+
+      <!-- SketchUp -->
+      <div class="project-card reveal" style="transition-delay:0.2s">
+        <svg class="project-icon" viewBox="0 0 48 48" fill="none">
+          <polygon points="24,4 44,16 44,32 24,44 4,32 4,16" stroke="#d4820a" stroke-width="1.5" fill="none"/>
+          <polygon points="24,4 44,16 24,28 4,16" stroke="#d4820a" stroke-width="1.5" fill="rgba(212,130,10,0.1)"/>
+          <line x1="24" y1="28" x2="24" y2="44" stroke="#d4820a" stroke-width="1.5"/>
+          <line x1="4" y1="16" x2="24" y2="28" stroke="#d4820a" stroke-width="1"/>
+          <line x1="44" y1="16" x2="24" y2="28" stroke="#d4820a" stroke-width="1"/>
+        </svg>
+        <p class="project-num">Tool 03</p>
+        <h3 class="project-title">SketchUp 3D Modeling</h3>
+        <p class="project-desc">
+          Creating detailed 3D conceptual and presentation models of structures and sites using SketchUp. Enables clear client communication of spatial relationships, massing, and design intent before construction.
+        </p>
+        <div class="project-tags">
+          <span class="tag">SketchUp</span>
+          <span class="tag">3D Modeling</span>
+          <span class="tag">Visualization</span>
+        </div>
+      </div>
+
+      <!-- PlanSwift + Bluebeam -->
+      <div class="project-card reveal" style="transition-delay:0.3s">
+        <svg class="project-icon" viewBox="0 0 48 48" fill="none">
+          <rect x="6" y="8" width="36" height="32" rx="2" stroke="#d4820a" stroke-width="1.5"/>
+          <line x1="14" y1="18" x2="34" y2="18" stroke="#d4820a" stroke-width="1.5"/>
+          <line x1="14" y1="24" x2="34" y2="24" stroke="#d4820a" stroke-width="1.5"/>
+          <line x1="14" y1="30" x2="26" y2="30" stroke="#d4820a" stroke-width="1.5"/>
+          <circle cx="36" cy="34" r="7" fill="#0d1115" stroke="#d4820a" stroke-width="1.5"/>
+          <line x1="33" y1="34" x2="39" y2="34" stroke="#d4820a" stroke-width="1.5"/>
+          <line x1="36" y1="31" x2="36" y2="37" stroke="#d4820a" stroke-width="1.5"/>
+        </svg>
+        <p class="project-num">Tool 04</p>
+        <h3 class="project-title">Cost Estimation</h3>
+        <p class="project-desc">
+          Preparing accurate quantity takeoffs and cost estimates using PlanSwift for measurement directly off drawings, and Bluebeam Revu for PDF-based markup, annotation, and collaborative review of engineering documents.
+        </p>
+        <div class="project-tags">
+          <span class="tag">PlanSwift</span>
+          <span class="tag">Bluebeam</span>
+          <span class="tag">Quantity Takeoff</span>
+          <span class="tag">Cost Estimate</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Revit Learning Banner -->
+    <div class="revit-banner reveal" style="transition-delay:0.4s">
+      <div class="revit-banner-inner">
+        <div class="revit-pulse"></div>
+        <div>
+          <p class="revit-label">Currently Learning</p>
+          <p class="revit-title">Autodesk Revit — BIM Modeling</p>
+        </div>
+        <p class="revit-desc">
+          Expanding into Building Information Modeling with Revit — developing skills in parametric families, coordinated MEP & structural models, and construction documentation workflows.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Core Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-layout">
+      <div class="skills-text reveal">
+        <p>
+          With over a decade of hands-on project experience, I bring <strong>rigorous analytical thinking</strong> and a proven track record of delivering complex infrastructure on time and within budget.
+        </p>
+        <p>
+          My expertise spans the full project lifecycle — from <strong>site investigation and concept design</strong> through to construction supervision and commissioning. I thrive in multidisciplinary environments where precision and collaboration are non-negotiable.
+        </p>
+        <p>
+          Licensed <strong>Professional Engineer (PE)</strong> with certifications in structural analysis, LEED green building practices, and project risk management.
+        </p>
+      </div>
+      <div class="skill-bars reveal" id="skill-bars">
+        <div class="skill-item">
+          <div class="skill-top">
+            <span class="skill-name">Structural Analysis</span>
+            <span class="skill-pct">96%</span>
+          </div>
+          <div class="skill-track"><div class="skill-fill" data-width="96"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top">
+            <span class="skill-name">AutoCAD / Civil 3D</span>
+            <span class="skill-pct">92%</span>
+          </div>
+          <div class="skill-track"><div class="skill-fill" data-width="92"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top">
+            <span class="skill-name">Geotechnical Engineering</span>
+            <span class="skill-pct">85%</span>
+          </div>
+          <div class="skill-track"><div class="skill-fill" data-width="85"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top">
+            <span class="skill-name">Project Management</span>
+            <span class="skill-pct">90%</span>
+          </div>
+          <div class="skill-track"><div class="skill-fill" data-width="90"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top">
+            <span class="skill-name">Hydraulics & Drainage</span>
+            <span class="skill-pct">80%</span>
+          </div>
+          <div class="skill-track"><div class="skill-fill" data-width="80"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top">
+            <span class="skill-name">BIM / Revit</span>
+            <span class="skill-pct">78%</span>
+          </div>
+          <div class="skill-track"><div class="skill-fill" data-width="78"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-header reveal">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <p class="timeline-date">2020 — Present</p>
+        <h3 class="timeline-role">Senior Structural Engineer</h3>
+        <p class="timeline-company">Meridian Infrastructure Group</p>
+        <p class="timeline-desc">
+          Lead structural engineer across a portfolio of bridges, retaining structures, and public buildings. Manage a team of 8 engineers and liaise directly with municipal clients on design approvals and change management.
+        </p>
+      </div>
+
+      <div class="timeline-item reveal" style="transition-delay:0.1s">
+        <p class="timeline-date">2015 — 2020</p>
+        <h3 class="timeline-role">Project Engineer</h3>
+        <p class="timeline-company">Atlas Civil Consultants</p>
+        <p class="timeline-desc">
+          Delivered geotechnical and structural design for road and rail projects across three states. Responsible for site investigation, foundation design, and contractor liaison during construction phases.
+        </p>
+      </div>
+
+      <div class="timeline-item reveal" style="transition-delay:0.2s">
+        <p class="timeline-date">2012 — 2015</p>
+        <h3 class="timeline-role">Graduate Civil Engineer</h3>
+        <p class="timeline-company">Halcrow Urban Design Studio</p>
+        <p class="timeline-desc">
+          Assisted senior engineers with stormwater drainage design, traffic modeling, and preparation of engineering reports for local government clients. Rotated through structural, transport, and water divisions.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="contact-label reveal">Get In Touch</p>
+    <h2 class="contact-heading reveal">Let's Build<br/>Something Great</h2>
+    <p class="contact-sub reveal">
+      Available for senior engineering roles, consulting, and<br/>major infrastructure projects worldwide.
+    </p>
+    <div class="contact-links reveal">
+      <a href="mailto:your.email@example.com" class="contact-btn filled">
+        &#9993; your.email@example.com
+      </a>
+      <a href="tel:+10000000000" class="contact-btn">
+        &#9990; +1 (000) 000-0000
+      </a>
+      <a href="#" class="contact-btn">
+        LinkedIn &#8599;
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 — Civil Engineer Portfolio</span>
+    <span>Built with precision.</span>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+
+    function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+        ring.style.width = '60px'; ring.style.height = '60px';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+        ring.style.width = '40px'; ring.style.height = '40px';
+      });
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => io.observe(r));
+
+    // Skill bars on scroll
+    const skillSection = document.getElementById('skill-bars');
+    let skillsAnimated = false;
+    const skillIO = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !skillsAnimated) {
+        skillsAnimated = true;
+        document.querySelectorAll('.skill-fill').forEach(bar => {
+          const w = bar.getAttribute('data-width');
+          bar.style.width = w + '%';
+        });
+      }
+    }, { threshold: 0.3 });
+    skillIO.observe(skillSection);
+  </script>
+</body>
+</html>
